@@ -25,7 +25,7 @@ Simply run `mvn clean install`
 When running the integration test in Eclipse, use following sample VM arguments in the launch configuration:
 
 `-Darquillian.debug=false -Darquillian.launch=wildfly-embedded -Djava.util.logging.manager=org.jboss.logmanager.LogManager
--Darquillian.server-runtime=/opt/ris/integrationtests/wildfly-15.0.1.Final --add-modules=java.se`
+-Darquillian.server-runtime=/your/path/to/wildfly-15.0.1.Final --add-modules=java.se`
 
 ## Expectations
 
