@@ -30,7 +30,7 @@ When running the integration test in Eclipse, use following sample VM arguments 
 
 ## Expectations
 
-In the pom.xml, you'll find the property `version.arquillian-persistence` that configured the Arquillian Persistence Extension to use. 
+In the pom.xml, you'll find the property `version.arquillian-persistence` that configures the Arquillian Persistence Extension to use. 
 If you swap versions, you will see that the given integrationtest `UserService_IT` fails or succeeds:
 
 * Version `1.2.0.2`  = failure
