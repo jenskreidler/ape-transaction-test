@@ -17,6 +17,7 @@ In pom.xml, you can modify the properties in order to adjust the setup to your l
 * `integrationtests.directory`: Main directory for integration test
 * `version.wildfly-dist`: The Wildfly distribution version running the Arquillian integration test, ex. 15.0.1.Final
 * `wildfly-embedded.directory`: The absolute directory of the local Wildfly installation to use
+* Your local Wildfly application server should've got the H2 datasource configured in JNDI under `java:/jboss/datasources/ExampleDS`
 
 ## Usage
 
