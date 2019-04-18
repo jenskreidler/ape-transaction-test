@@ -76,7 +76,7 @@ public class UserService_IT {
 
         //
         // You should see, that no commit nor a cleanup of the previous test method has been performed :-(
-        // Using arquillian-persistence 1.1.13.0, it succeeds, with recent 1.2.0.1 it fails.
+        // Using arquillian-persistence 1.1.13.0, it succeeds, with recent 1.2.0.2 it fails.
         //
     }
 }
