@@ -12,11 +12,11 @@ Simple mavenized ejb project to reproduce a supposed-to-be bug in the arquillian
 
 ## Setup
 
-In pom.xml, you can modify the properties in order to ajust the setup to your local installation:
+In pom.xml, you can modify the properties in order to adjust the setup to your local installation:
 
-`integrationtests.directory`: Main directory for integration test
-`version.wildfly-dist`: The Wildfly distribution version running the Arquillian integration test, ex. 15.0.1.Final
-`wildfly-embedded.directory`: The absolute directory of the local Wildfly installation to use
+* `integrationtests.directory`: Main directory for integration test
+* `version.wildfly-dist`: The Wildfly distribution version running the Arquillian integration test, ex. 15.0.1.Final
+* `wildfly-embedded.directory`: The absolute directory of the local Wildfly installation to use
 
 ## Usage
 
