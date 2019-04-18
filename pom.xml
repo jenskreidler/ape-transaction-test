@@ -16,7 +16,7 @@
         <!-- Integrationtests setup -->
         <test.container>wildfly-embedded</test.container>
         <java.util.logmanager>org.jboss.logmanager.LogManager</java.util.logmanager>
-        <integrationtests.directory>D:/opt/ris/integrationtests</integrationtests.directory>
+        <integrationtests.directory>/opt/ris/integrationtests</integrationtests.directory>
         <version.wildfly-dist>15.0.1.Final</version.wildfly-dist>
         <wildfly-embedded.directory>${integrationtests.directory}/wildfly-${version.wildfly-dist}</wildfly-embedded.directory>
         <server.directory>${wildfly-embedded.directory}</server.directory>
