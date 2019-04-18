@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.jodes.report.ape</groupId>
+    <artifactId>ape-transaction-test</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>ejb</packaging>
+
+    <name>ape-transaction-test</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Integrationtests setup -->
+        <test.container>wildfly-embedded</test.container>
+        <java.util.logmanager>org.jboss.logmanager.LogManager</java.util.logmanager>
+        <integrationtests.directory>D:/opt/ris/integrationtests</integrationtests.directory>
+        <version.wildfly-dist>15.0.1.Final</version.wildfly-dist>
+        <wildfly-embedded.directory>${integrationtests.directory}/wildfly-${version.wildfly-dist}</wildfly-embedded.directory>
+        <server.directory>${wildfly-embedded.directory}</server.directory>
+
+        <!-- Maven plugins -->
+        <version.maven-surefire-plugin>2.22.0</version.maven-surefire-plugin>
+
+        <!-- Wildfly -->
+        <version.org.wildfly.wildfly-server>15.0.1.Final</version.org.wildfly.wildfly-server>
+        <version.wildfly-arquillian-container-embedded>2.2.0.Final</version.wildfly-arquillian-container-embedded>
+
+        <!-- Arquillian (swap ape-universe pom for testing purpose of supposed-to-be transactional bug) -->
+        <version.arquillian-bom>1.4.1.Final</version.arquillian-bom>
+        <!-- Run ITs with either version: 1.1.13.0 = success, 1.2.0.2 = failure -->
+        <version.arquillian-persistence>1.2.0.2</version.arquillian-persistence>
+<!--         <version.arquillian-persistence>1.1.13.0</version.arquillian-persistence> -->
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.arquillian.universe</groupId>
+                <artifactId>arquillian-persistence</artifactId>
+                <version>${version.arquillian-persistence}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version.arquillian-bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Application server bom (and JEE APIs imported via type pom, scope import, dig here...) -->
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-javaee8-with-tools</artifactId>
+                <version>${version.org.wildfly.wildfly-server}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- JEE API -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-persistence</artifactId>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-embedded</artifactId>
+            <version>${version.wildfly-arquillian-container-embedded}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.logmanager</groupId>
+            <artifactId>jboss-logmanager</artifactId>
+            <version>2.1.5.Final</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Commons APIs -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Logging APIs declarations -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.8.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.8.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${version.maven-surefire-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- permit illegal module access, add module "java.se" -->
+                        <argLine>-Dfile.encoding=UTF8 --illegal-access=permit --add-modules=java.se</argLine>
+                        <systemPropertyVariables>
+                            <arquillian.launch>${test.container}</arquillian.launch>
+                            <arquillian.server-runtime>${server.directory}</arquillian.server-runtime>
+                            <java.util.logging.manager>${java.util.logmanager}</java.util.logging.manager>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>11</release>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <ejbVersion>3.1</ejbVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

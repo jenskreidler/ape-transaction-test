@@ -1,0 +1,15 @@
+# Created at 2019-04-18T11:18:10.685
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2019-04-18T11:18:10.706
+WARNING: Illegal reflective access by org.jboss.invocation.proxy.AbstractProxyFactory$1 (jar:file:/d:/opt/ris/integrationtests/wildfly-15.0.1.Final/modules/system/layers/base/org/jboss/invocation/main/jboss-invocation-1.5.1.Final.jar!/) to method java.lang.Object.clone()
+
+# Created at 2019-04-18T11:18:10.708
+WARNING: Please consider reporting this to the maintainers of org.jboss.invocation.proxy.AbstractProxyFactory$1
+
+# Created at 2019-04-18T11:18:10.740
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2019-04-18T11:18:10.743
+WARNING: All illegal access operations will be denied in a future release
+
